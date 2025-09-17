@@ -3,8 +3,8 @@ FROM ubuntu:14.04
 LABEL maintainer="franz.developer@proton.me"
 
 # docker build -t my-firebird-2.5.9 .
-# docker run -d --name firebird259 -v /path/to/db:/firebird/data -p 3050:3050 my-firebird-2.5.9
-# docker exec -it firebird_instance /bin/bash
+# docker run -d --name firebird259 -v ./db:/firebird/data -p 3050:3050 my-firebird-2.5.9 (agregar persistencia y definir uso de recursos "CPU y RAM")
+# docker exec -it firebird259 /bin/bash
 
 ENV PREFIX=/usr/local/firebird
 ENV VOLUME=/firebird
@@ -35,17 +35,8 @@ RUN apt-get update && apt-get install -qy --no-install-recommends \
  && apt-get purge -qy --auto-remove libncurses5-dev bzip2 curl gcc g++ make libicu-dev \
  && rm -rf /var/lib/apt/lists/*
 
-# Prepare skeleton files
-RUN mkdir -p "${PREFIX}/skel" \
- && mv ${VOLUME}/system/security2.fdb ${PREFIX}/skel/security2.fdb \
- && mv "${VOLUME}/etc" "${PREFIX}/skel"
-
 VOLUME ["/firebird"]
 
 EXPOSE 3050
 
-COPY docker-entrypoint.sh ${PREFIX}/docker-entrypoint.sh
-RUN chmod +x ${PREFIX}/docker-entrypoint.sh
-
-ENTRYPOINT ["/usr/local/firebird/docker-entrypoint.sh"]
 CMD ["/usr/local/firebird/bin/fbguard"]
