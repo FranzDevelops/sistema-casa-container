@@ -20,8 +20,8 @@ docker run -d --name firebird259 \
 ```bash
 docker run -d --name firebird259 \
   --restart unless-stopped \
-  --cpus=1.5 \
-  --memory=2g \
+  --cpus=7 \
+  --memory=10g \
   -v ./db:/firebird/data \
   -p 3050:3050 \
   my-firebird-2.5.9

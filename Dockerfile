@@ -2,10 +2,6 @@ FROM ubuntu:14.04
 
 LABEL maintainer="franz.developer@proton.me"
 
-# docker build -t my-firebird-2.5.9 .
-# docker run -d --name firebird259 -v ./db:/firebird/data -p 3050:3050 my-firebird-2.5.9 (agregar persistencia y definir uso de recursos "CPU y RAM")
-# docker exec -it firebird259 /bin/bash
-
 ENV PREFIX=/usr/local/firebird
 ENV VOLUME=/firebird
 ENV DEBIAN_FRONTEND=noninteractive
